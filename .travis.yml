@@ -8,10 +8,12 @@ before_install:
 
 env:
   - with_fftw=false with_mpi=false myconfig=maxset
-  - myconfig=default
   - myconfig=maxset
-  - myconfig=shanchen
-  - myconfig=tunableslip
+  - myconfig=default
+  - with_mpi=false myconfig=molcut
+  - myconfig=molcut
+  - myconfig=nocheck-maxset
+  - with_mpi=false myconfig=nocheck-maxset
 
 compiler:
   - gcc
@@ -20,6 +22,7 @@ matrix:
   include:
     - compiler: clang
       env: with_fftw=true with_mpi=false myconfig=maxset
+      env: with_fftw=false with_mpi=false myconfig=maxset
 
 script: ./maintainer/travis/build.sh
 

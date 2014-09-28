@@ -10,7 +10,8 @@ env:
   - with_fftw=false with_mpi=false myconfig=maxset
   - myconfig=default
   - myconfig=maxset
-  - myconfig=nocheck-maxset
+  - myconfig=shanchen
+  - myconfig=tunableslip
 
 compiler:
   - gcc

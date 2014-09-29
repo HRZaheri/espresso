@@ -6,28 +6,48 @@ before_install:
  - if [[ x$with_mpi != xfalse ]]; then sudo apt-get install libopenmpi-dev openmpi-bin; fi
  - if [[ x$with_fftw != xfalse ]]; then sudo apt-get install libfftw3-dev; fi
 
-mpi:
-  - with_mpi=false
-  - with_mpi=true
-
-ffw:
-  - with_fftw=false
-  - with_fftw=true
-
 env:
-  - myconfig=maxset
-  - myconfig=default
-  - myconfig=molcut
-  - myconfig=nocheck-maxset
+  - with_fftw=true with_mpi=true myconfig=default
+  - with_fftw=false with_mpi=true myconfig=default
+  - with_fftw=false with_mpi=false myconfig=default
+  - with_fftw=true with_mpi=false myconfig=default
+
+  - with_fftw=true with_mpi=true myconfig=maxset
+  - with_fftw=false with_mpi=true myconfig=maxset
+  - with_fftw=false with_mpi=false myconfig=maxset
+  - with_fftw=true with_mpi=false myconfig=maxset
+
+  - with_fftw=true with_mpi=true myconfig=nocheck-maxset
+  - with_fftw=false with_mpi=true myconfig=nocheck-maxset
+  - with_fftw=false with_mpi=false myconfig=nocheck-maxset
+  - with_fftw=true with_mpi=false myconfig=nocheck-maxset
+
+  - with_mpi=true myconfig=molcut
+  - with_mpi=false myconfig=molcut
+
+  - with_mpi=true myconfig=rest1
+  - with_mpi=false myconfig=rest1
+
+  - with_mpi=true myconfig=rest2
+  - with_mpi=false myconfig=rest2
 
 compiler:
   - gcc
-  - clang
 
 matrix:
-  exclude:
+  include:
     - compiler: clang
-      mpi: with_mpi=true
+      env: with_fftw=true with_mpi=false myconfig=default
+      env: with_fftw=false with_mpi=false myconfig=default
+
+      env: with_fftw=true with_mpi=false myconfig=maxset
+      env: with_fftw=false with_mpi=false myconfig=maxset
+
+      env: with_fftw=true with_mpi=false myconfig=nocheck-maxset
+      env: with_fftw=false with_mpi=false myconfig=nocheck-maxset
+
+      env: with_mpi=false myconfig=molcut
+      env: with_mpi=false myconfig=rest1
+      env: with_mpi=false myconfig=rest2
 
 script: ./maintainer/travis/build.sh
-
